@@ -1,10 +1,9 @@
 package org.example.rdv_app.dao.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Date;
 
 @Entity
 @Getter
@@ -12,10 +11,14 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Heure {
+@Table(name = "Creneau")
+public class Creneau {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
     private int heure;
-    private String jour;
+    private Date date;
+    @ManyToOne
+    @JoinColumn(name = "abonne_id")
+    private Abonne abonne;
 }

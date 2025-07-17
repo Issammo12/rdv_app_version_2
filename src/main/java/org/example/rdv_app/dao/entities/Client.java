@@ -1,10 +1,9 @@
-package org.example.rdv_app;
+package org.example.rdv_app.dao.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,15 +11,21 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Table(name = "Client")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer client_id;
     private String nom;
     private String prenom;
     private String adresse;
     private String telephone;
     private String email;
     private String password;
+    @OneToMany(mappedBy = "client")
+    private List<RendezVous> rendezVousList;
+    @OneToMany(mappedBy = "client")
+    private List<Evenement> evenementList;
+//    @ManyToOne
+//    private CodePromo codePromo;
 }

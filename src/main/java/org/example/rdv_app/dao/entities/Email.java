@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Notification {
+public class Email {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

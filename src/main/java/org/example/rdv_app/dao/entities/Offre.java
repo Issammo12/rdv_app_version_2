@@ -1,9 +1,6 @@
 package org.example.rdv_app.dao.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -12,13 +9,20 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Service {
+@Table(name = "Offre")
+public class Offre {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
     private String description;
     private String nom;
     private String category;
     private int duration;
     private int price;
+    @ManyToOne(targetEntity = Abonne.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "abonne_id")
+    private Abonne abonne;
+    @ManyToOne
+    @JoinColumn(name = "code_id")
+    private CodePromo codePromo;
 }

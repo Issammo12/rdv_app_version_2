@@ -1,25 +1,38 @@
-package org.example.rdv_app;
+package org.example.rdv_app.dao.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @ToString
+@Table(name = "Abonné")
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Abonne {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer abonne_id;
     private String nom;
     private String prenom;
     private String adresse;
     private String telephone;
     private String email;
     private String password;
+    private String profession;
+    @OneToMany(mappedBy = "abonne")
+    private List<RendezVous> rendezVousList;
+    @OneToMany(mappedBy = "abonne")
+    private List<Creneau> creneauList;
+    @OneToMany(mappedBy = "abonne")
+    private List<Evenement> evenementList;
+    @OneToMany(mappedBy = "abonne")
+    private List<Offre> offreList;
+    @OneToOne
+    private CodePromo codePromo;
+
 }
