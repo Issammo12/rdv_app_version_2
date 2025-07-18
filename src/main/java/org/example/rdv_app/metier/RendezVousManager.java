@@ -6,6 +6,8 @@ import org.example.rdv_app.dao.utils.Statut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 @Service
 public class RendezVousManager implements RendezVousService {
@@ -42,6 +44,15 @@ public class RendezVousManager implements RendezVousService {
     @Override
     public boolean deleteRendezVous(int id) {
         if(rendezVousRepo.existsById(id)) {
+            rendezVousRepo.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteRendezVousAutomatically(int id) {
+        if(rendezVousRepo.existsById(id) && rendezVousRepo.findById(id).get().getCreneau().getDate()== Date.valueOf(LocalDate.now()) &&  Date.valueOf(LocalDate.now()).after(rendezVousRepo.findById(id).get().getCreneau().getDate())) {
             rendezVousRepo.deleteById(id);
             return true;
         }

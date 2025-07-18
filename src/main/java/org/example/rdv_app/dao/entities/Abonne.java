@@ -24,13 +24,13 @@ public class Abonne {
     private String email;
     private String password;
     private String profession;
-    @OneToMany(mappedBy = "abonne")
+    @OneToMany(mappedBy = "abonne" , fetch = FetchType.LAZY)
     private List<RendezVous> rendezVousList;
-    @OneToMany(mappedBy = "abonne")
+    @OneToMany(mappedBy = "abonne" , fetch = FetchType.LAZY)
     private List<Creneau> creneauList;
-    @OneToMany(mappedBy = "abonne")
+    @OneToMany(mappedBy = "abonne" , fetch = FetchType.LAZY)
     private List<Evenement> evenementList;
-    @OneToMany(mappedBy = "abonne")
+    @OneToMany(mappedBy = "abonne" , fetch = FetchType.LAZY)
     private List<Offre> offreList;
     @OneToOne
     private CodePromo codePromo;

@@ -13,6 +13,8 @@ public interface RendezVousService {
     public RendezVous updateRendezVous(RendezVous rendezVous);
     public boolean deleteRendezVous(int id);
 
+    public boolean deleteRendezVousAutomatically(int id);
+
     public Creneau getCreneau(int id);
 
     public Offre getOffre(int id);

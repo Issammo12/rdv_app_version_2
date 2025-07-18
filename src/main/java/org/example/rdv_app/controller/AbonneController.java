@@ -39,8 +39,8 @@ public class AbonneController {
     }
 
     @GetMapping("/{id}")
-    public Abonne abonneById(@PathVariable int id){
-        return abonneService.getAbonneById(id);
+    public ResponseEntity<Abonne> abonneById(@PathVariable int id){
+        return ResponseEntity.ok(abonneService.getAbonneById(id));
     }
 
     @PostMapping("/add")
@@ -53,9 +53,9 @@ public class AbonneController {
         return abonneService.updateAbonne(abonne);
     }
 
-    @DeleteMapping("/delete")
-    public String abonneDelete(@RequestBody Abonne abonne){
-        boolean res= abonneService.deleteAbonneById(abonne.getAbonne_id());
+    @DeleteMapping("/delete/{id}")
+    public String abonneDelete(@PathVariable int id){
+        boolean res= abonneService.deleteAbonneById(id);
         if(res==true){
             return "cet abonné est supprimé";
         }

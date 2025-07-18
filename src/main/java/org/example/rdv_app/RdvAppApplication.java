@@ -11,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class RdvAppApplication implements CommandLineRunner {
 		abonne.setTelephone("1234567890");
 
 
+
 	    System.out.println(abonne.toString());
 		abonneRepository.save(abonne);
 
@@ -89,7 +91,7 @@ public class RdvAppApplication implements CommandLineRunner {
 		Creneau creneau = new Creneau();
 		creneau.setId(null);
 		creneau.setHeure(10);
-		creneau.setDate(new Date(18 , 07 , 2025));
+		creneau.setDate(new Date(2025 , 07 , 18));
 		creneau.setAbonne(abonne);
 	    System.out.println(creneau.toString());
 		creneauRepository.save(creneau);
@@ -139,6 +141,7 @@ public class RdvAppApplication implements CommandLineRunner {
 		demandeRV.setConfirmation(true);
 		demandeRV.setRendezVous(rendezVous);
 		System.out.println(demandeRV.toString());
+//		demandeRVRepository.save(demandeRV);
 
 		System.out.println(creneau.getDate().getDate() + 1);
 
@@ -148,6 +151,8 @@ public class RdvAppApplication implements CommandLineRunner {
 			emailService.rappelHeureRvEmail(dm);
 			emailService.rappelVeilleRvEmail(dm);
 		}
+
+		System.out.println(java.sql.Date.valueOf(LocalDate.now()).after(rendezVousRepository.findById(1).get().getCreneau().getDate()));
 
 
 
