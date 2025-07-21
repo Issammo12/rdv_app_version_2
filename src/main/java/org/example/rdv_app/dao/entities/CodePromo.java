@@ -21,9 +21,10 @@ public class CodePromo {
     private double percentage;
     private Date dateDebut;
     private Date dateFin;
-//    private int nbr_users;
+    private int nbr_users;
+    private boolean active = true;
     @OneToOne
     private Abonne abonne;
-//    @OneToMany(mappedBy = "codePromo")
-//    private List<Client> clientList;
+    @OneToMany(mappedBy = "codePromo")
+    private List<Client> clientList;
 }

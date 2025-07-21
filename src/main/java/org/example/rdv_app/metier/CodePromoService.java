@@ -8,6 +8,7 @@ public interface CodePromoService {
     public CodePromo findCodePromoById(Integer id);
     public CodePromo updateCodePromo(CodePromo codePromo);
     public boolean deleteCodePromo(CodePromo codePromo);
+    public void desactiverCodePromo(CodePromo codePromo);
 
     // methode pour appliquer le code promo
 

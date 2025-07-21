@@ -1,5 +1,6 @@
 package org.example.rdv_app.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.rdv_app.dao.utils.Statut;
@@ -23,8 +24,10 @@ public class RendezVous {
     private Offre offre;
     @ManyToOne
     @JoinColumn(name = "abonne_id")
+    @JsonIgnore
     private Abonne abonne;
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @JsonIgnore
     private Client client;
 }

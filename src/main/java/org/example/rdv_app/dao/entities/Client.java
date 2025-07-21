@@ -26,6 +26,6 @@ public class Client {
     private List<RendezVous> rendezVousList;
     @OneToMany(mappedBy = "client")
     private List<Evenement> evenementList;
-//    @ManyToOne
-//    private CodePromo codePromo;
+    @ManyToOne
+    private CodePromo codePromo;
 }

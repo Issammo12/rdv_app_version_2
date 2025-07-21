@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/CodePromo")
+@RequestMapping("/code")
 public class CodePromoController {
     @Autowired
     CodePromoService codePromoService;
@@ -29,5 +29,10 @@ public class CodePromoController {
             return "Deleted Code Promo Successfully";
         }
         return "Deleted Code Promo Failed";
+    }
+    @GetMapping("/desactiver")
+    public String desactiverCodePromo(@RequestBody CodePromo codePromo) {
+        codePromoService.desactiverCodePromo(codePromo);
+        return "Desactiver Code Promo Successfully";
     }
 }

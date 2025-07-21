@@ -1,5 +1,6 @@
 package org.example.rdv_app.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,5 +21,6 @@ public class Creneau {
     private Date date;
     @ManyToOne
     @JoinColumn(name = "abonne_id")
+    @JsonIgnore
     private Abonne abonne;
 }

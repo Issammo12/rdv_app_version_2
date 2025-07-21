@@ -1,5 +1,6 @@
 package org.example.rdv_app.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class Offre {
     private int price;
     @ManyToOne(targetEntity = Abonne.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "abonne_id")
+    @JsonIgnore
     private Abonne abonne;
     @ManyToOne
     @JoinColumn(name = "code_id")

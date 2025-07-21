@@ -41,4 +41,11 @@ public class CodePromoManager implements CodePromoService {
         }
         return false;
     }
+
+    @Override
+    public void desactiverCodePromo(CodePromo codePromo) {
+        if (codePromo.getClientList().size() == codePromo.getNbr_users() || codePromo.getDateFin()== Date.valueOf(LocalDate.now())) {
+            codePromo.setActive(false);
+        }
+    }
 }
