@@ -22,6 +22,7 @@ public class Client {
     private String telephone;
     private String email;
     private String password;
+    private boolean active=true;
     @OneToMany(mappedBy = "client")
     private List<RendezVous> rendezVousList;
     @OneToMany(mappedBy = "client")

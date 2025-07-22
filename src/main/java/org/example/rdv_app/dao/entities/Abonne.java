@@ -26,6 +26,7 @@ public class Abonne {
     private String password;
     private String profession;
     private LocalDate creation_date;
+    private boolean active=true;
     @OneToMany(mappedBy = "abonne" , fetch = FetchType.LAZY)
     private List<RendezVous> rendezVousList;
     @OneToMany(mappedBy = "abonne" , fetch = FetchType.LAZY)

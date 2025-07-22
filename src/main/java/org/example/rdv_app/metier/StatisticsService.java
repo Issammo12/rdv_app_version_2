@@ -2,6 +2,8 @@ package org.example.rdv_app.metier;
 
 import org.example.rdv_app.dao.entities.Abonne;
 import org.example.rdv_app.dao.entities.Client;
+import org.example.rdv_app.dao.entities.Evenement;
+import org.example.rdv_app.dao.entities.Offre;
 
 import java.util.List;
 
@@ -16,5 +18,22 @@ public interface StatisticsService {
     public List<Client> getClients();
 
     public int totalNumberOfAbonnesByMonth();
+
+    public void supprimerCompteAbonne(Abonne a);
+    public void supprimerCompteClient(Client c);
+    public void desactiverCompteAbonne(Abonne a);
+    public void desactiverCompteClient(Client c);
+    public int totalNumberOfRVByAbonne(int abonneId);
+    public int totalRevenusByAbonne(int abonneId);
+
+    public List<Offre> mostTakenOffresByAbonne(int abonneId);
+
+    public int totalNumberOfRVByClient(int clientId);
+
+    public List<Offre> allOffresByClient(int clientId);
+
+    public List<Evenement> popularEvents(int abonneId);
+
+    public int totalEventsByClient(int clientId);
 
 }
