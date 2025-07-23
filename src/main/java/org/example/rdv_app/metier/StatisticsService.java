@@ -6,6 +6,7 @@ import org.example.rdv_app.dao.entities.Evenement;
 import org.example.rdv_app.dao.entities.Offre;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StatisticsService {
     public int totalNumberOfUsers();
@@ -26,13 +27,13 @@ public interface StatisticsService {
     public int totalNumberOfRVByAbonne(int abonneId);
     public int totalRevenusByAbonne(int abonneId);
 
-    public List<Offre> mostTakenOffresByAbonne(int abonneId);
+    public Map<Offre,Integer> mostTakenOffresByAbonne(int abonneId);
 
     public int totalNumberOfRVByClient(int clientId);
 
     public List<Offre> allOffresByClient(int clientId);
 
-    public List<Evenement> popularEvents(int abonneId);
+    public Map<Evenement,Integer> popularEvents(int abonneId);
 
     public int totalEventsByClient(int clientId);
 

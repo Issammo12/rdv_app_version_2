@@ -111,7 +111,7 @@ public class StatisticsManager implements StatisticsService {
     }
 
     @Override
-    public List<Offre> mostTakenOffresByAbonne(int abonneId) {
+    public Map<Offre , Integer> mostTakenOffresByAbonne(int abonneId) {
         RendezVous[] list = abonneRepository.findById(abonneId).get().getRendezVousList().stream().toArray(RendezVous[]::new);
         int total = 0;
         Map<Offre , Integer> map = new HashMap<>();
@@ -123,7 +123,7 @@ public class StatisticsManager implements StatisticsService {
             }
             map.put(list[i].getOffre(), total);
         }
-        return map.entrySet().stream().sorted().map(Map.Entry::getKey).collect(Collectors.toList());
+        return map;
     }
 
     @Override
@@ -137,8 +137,20 @@ public class StatisticsManager implements StatisticsService {
     }
 
     @Override
-    public List<Evenement> popularEvents(int abonneId) {
-        return abonneRepository.findById(abonneId).get().getEvenementList().stream().filter(e -> e.getNbr_place()==clientRepository.findAll().stream().count()).collect(Collectors.toList());
+    public Map<Evenement , Integer> popularEvents(int abonneId) {
+        Map<Evenement , Integer> map = new HashMap<>();
+        int total =0;
+        List<Evenement> list=abonneRepository.findById(abonneId).get().getEvenementList();
+        List<Client> clients=clientRepository.findAll();
+        for (Evenement e : list ) {
+            for (Client c : clients ) {
+                for (Evenement ev : c.getEvenementList()) {
+                    if(e==ev) total++;
+                }
+            }
+            map.put(e, total);
+        }
+        return map;
     }
 
     @Override
