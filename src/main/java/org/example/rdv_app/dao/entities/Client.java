@@ -3,6 +3,7 @@ package org.example.rdv_app.dao.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -23,6 +24,7 @@ public class Client {
     private String email;
     private String password;
     private boolean active=true;
+    private LocalDate creation_date = LocalDate.now();
     @OneToMany(mappedBy = "client")
     private List<RendezVous> rendezVousList;
     @OneToMany(mappedBy = "client")

@@ -1,5 +1,6 @@
 package org.example.rdv_app;
 
+import jdk.jfr.Timespan;
 import org.example.rdv_app.dao.entities.*;
 import org.example.rdv_app.dao.repositories.*;
 import org.example.rdv_app.dao.utils.Statut;
@@ -12,8 +13,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalField;
+import java.time.temporal.ValueRange;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @SpringBootApplication
 public class RdvAppApplication implements CommandLineRunner {
@@ -154,6 +160,10 @@ public class RdvAppApplication implements CommandLineRunner {
 
 		System.out.println(java.sql.Date.valueOf(LocalDate.now()).after(rendezVousRepository.findById(1).get().getCreneau().getDate()));
 
+		System.out.println(Calendar.getInstance());
+		Date date = new Date();
+		int a =Calendar.DAY_OF_MONTH;
+		System.out.println(a);
 
 
 

@@ -1,10 +1,12 @@
 package org.example.rdv_app.metier;
 
+import io.micrometer.core.ipc.http.HttpSender;
 import org.example.rdv_app.dao.entities.Abonne;
 import org.example.rdv_app.dao.entities.Client;
 import org.example.rdv_app.dao.entities.Evenement;
 import org.example.rdv_app.dao.entities.Offre;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -36,5 +38,9 @@ public interface StatisticsService {
     public Map<Evenement,Integer> popularEvents(int abonneId);
 
     public int totalEventsByClient(int clientId);
+    //ces methodes en bas sont les graphes du back-office
+    public Map<LocalDate , Integer>  totalNewAbonnesPerDay();
+
+    public Map<LocalDate , Integer>  totalNewClientsPerDay();
 
 }

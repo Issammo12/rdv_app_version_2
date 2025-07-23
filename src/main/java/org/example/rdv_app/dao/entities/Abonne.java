@@ -25,7 +25,7 @@ public class Abonne {
     private String email;
     private String password;
     private String profession;
-    private LocalDate creation_date;
+    private LocalDate creation_date = LocalDate.now();
     private boolean active=true;
     @OneToMany(mappedBy = "abonne" , fetch = FetchType.LAZY)
     private List<RendezVous> rendezVousList;

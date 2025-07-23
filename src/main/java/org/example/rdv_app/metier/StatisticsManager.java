@@ -1,17 +1,21 @@
 package org.example.rdv_app.metier;
 
+import org.apache.coyote.Request;
+import org.apache.coyote.RequestInfo;
+import org.apache.logging.log4j.CloseableThreadContext;
+import org.aspectj.weaver.ast.Instanceof;
 import org.example.rdv_app.dao.entities.*;
 import org.example.rdv_app.dao.repositories.*;
 import org.example.rdv_app.dao.utils.Statut;
 import org.hibernate.stat.Statistics;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.web.exchanges.HttpExchange;
 import org.springframework.stereotype.Service;
 
 import javax.print.attribute.standard.DateTimeAtCreation;
+import java.net.http.HttpRequest;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -156,6 +160,20 @@ public class StatisticsManager implements StatisticsService {
     @Override
     public int totalEventsByClient(int clientId) {
         return (int) clientRepository.findById(clientId).get().getEvenementList().stream().count();
+    }
+
+    @Override
+    public Map<LocalDate , Integer>  totalNewAbonnesPerDay() {
+        Map<LocalDate , Integer> map = new HashMap<>();
+        map.put(LocalDate.now(), (int) abonneRepository.findAll().stream().filter(a -> a.getCreation_date()==LocalDate.now()).count());
+        return map;
+    }
+
+    @Override
+    public Map<LocalDate, Integer> totalNewClientsPerDay() {
+        Map<LocalDate , Integer> map = new HashMap<>();
+        map.put(LocalDate.now(), (int) clientRepository.findAll().stream().filter(a -> a.getCreation_date()==LocalDate.now()).count());
+        return map;
     }
 
 
