@@ -115,17 +115,17 @@ public class StatisticsManager implements StatisticsService {
     }
 
     @Override
-    public Map<Offre , Integer> mostTakenOffresByAbonne(int abonneId) {
+    public Map<String , Integer> mostTakenOffresByAbonne(int abonneId) {
         RendezVous[] list = abonneRepository.findById(abonneId).get().getRendezVousList().stream().toArray(RendezVous[]::new);
         int total = 0;
-        Map<Offre , Integer> map = new HashMap<>();
+        Map<String , Integer> map = new HashMap<>();
         for (int i=0 ; i<list.length ; i++ ){
             for(int j=i+1 ; j<list.length ; j++ ){
                 if(list[i].getOffre()==list[j].getOffre()){
                     total++;
                 }
             }
-            map.put(list[i].getOffre(), total);
+            map.put(list[i].getOffre().getNom(), total);
         }
         return map;
     }
@@ -174,6 +174,11 @@ public class StatisticsManager implements StatisticsService {
         Map<LocalDate , Integer> map = new HashMap<>();
         map.put(LocalDate.now(), (int) clientRepository.findAll().stream().filter(a -> a.getCreation_date()==LocalDate.now()).count());
         return map;
+    }
+
+    @Override
+    public Map<LocalDate, Integer> viewsPerAbonne(Map<Integer, Map<LocalDate, Integer>> map , int abonneId) {
+        return map.get(abonneId);
     }
 
 

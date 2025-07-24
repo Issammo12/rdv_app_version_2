@@ -29,7 +29,7 @@ public interface StatisticsService {
     public int totalNumberOfRVByAbonne(int abonneId);
     public int totalRevenusByAbonne(int abonneId);
 
-    public Map<Offre,Integer> mostTakenOffresByAbonne(int abonneId);
+    public Map<String,Integer> mostTakenOffresByAbonne(int abonneId);
 
     public int totalNumberOfRVByClient(int clientId);
 
@@ -42,5 +42,6 @@ public interface StatisticsService {
     public Map<LocalDate , Integer>  totalNewAbonnesPerDay();
 
     public Map<LocalDate , Integer>  totalNewClientsPerDay();
+    public Map<LocalDate , Integer>  viewsPerAbonne(Map<Integer , Map<LocalDate , Integer>> map , int abonneId);
 
 }
