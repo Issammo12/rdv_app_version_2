@@ -102,12 +102,17 @@ public class StatsController {
         return service.totalNewClientsPerDay();
     }
     @GetMapping("/views/{id}")
-    public Map<LocalDate, Integer> views(@PathVariable int id , @RequestBody Map<Integer , Map<LocalDate, Integer>> map) {
-        return service.viewsPerAbonne(map, id);
+    public Map<LocalDate, Integer> views(@PathVariable int id) {
+        return service.viewsPerAbonne(id);
     }
 
     @GetMapping("/total-events/{id}")
     public int totalEvents(@PathVariable int id) {
         return service.totalEventsByClient(id);
+    }
+
+    @GetMapping("/list-clients-visiting-abonne/{id}")
+    public List<Client> listClientsVisitingAbonne(@PathVariable int id) {
+        return service.listClientsVisitedAbonne(id);
     }
 }

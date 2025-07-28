@@ -42,6 +42,8 @@ public interface StatisticsService {
     public Map<LocalDate , Integer>  totalNewAbonnesPerDay();
 
     public Map<LocalDate , Integer>  totalNewClientsPerDay();
-    public Map<LocalDate , Integer>  viewsPerAbonne(Map<Integer , Map<LocalDate , Integer>> map , int abonneId);
+    public Map<LocalDate , Integer>  viewsPerAbonne( int abonneId);
+
+    public List<Client> listClientsVisitedAbonne(int abonneId);
 
 }

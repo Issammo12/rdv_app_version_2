@@ -177,8 +177,20 @@ public class StatisticsManager implements StatisticsService {
     }
 
     @Override
-    public Map<LocalDate, Integer> viewsPerAbonne(Map<Integer, Map<LocalDate, Integer>> map , int abonneId) {
-        return map.get(abonneId);
+    public Map<LocalDate, Integer> viewsPerAbonne(int abonneId) {
+        Map<LocalDate , Integer> map = new HashMap<>();
+        List<Client> clients=clientRepository.findAll();
+        int total =0;
+        for (Client c : clients) {
+            if(c.getVisitedAbonnes().contains(abonneId)) total++;
+        }
+        map.put(LocalDate.now(), total);
+        return map;
+    }
+
+    @Override
+    public List<Client> listClientsVisitedAbonne(int abonneId) {
+        return clientRepository.findAll().stream().filter(c -> c.getVisitedAbonnes().contains(abonneId)).collect(Collectors.toList());
     }
 
 

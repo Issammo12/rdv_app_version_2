@@ -35,6 +35,8 @@ public class Abonne {
     private List<Evenement> evenementList;
     @OneToMany(mappedBy = "abonne" , fetch = FetchType.LAZY)
     private List<Offre> offreList;
+    @ManyToOne
+    private Client client;
     @OneToOne
     private CodePromo codePromo;
 

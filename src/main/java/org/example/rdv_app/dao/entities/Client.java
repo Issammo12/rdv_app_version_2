@@ -29,6 +29,8 @@ public class Client {
     private List<RendezVous> rendezVousList;
     @OneToMany(mappedBy = "client")
     private List<Evenement> evenementList;
+    @OneToMany(mappedBy = "client")
+    private List<Abonne> visitedAbonnes;
     @ManyToOne
     private CodePromo codePromo;
 }

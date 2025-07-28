@@ -2,6 +2,7 @@ package org.example.rdv_app.controller;
 
 import org.example.rdv_app.dao.entities.*;
 import org.example.rdv_app.dao.repositories.AbonneRepository;
+import org.example.rdv_app.dao.repositories.ClientRepository;
 import org.example.rdv_app.dao.utils.JwtUtil;
 import org.example.rdv_app.dao.utils.LoginRequest;
 import org.example.rdv_app.dao.utils.RegisterRequest;
@@ -30,6 +31,8 @@ public class AbonneController {
     private AbonneRepository abonneRepository;
     @Autowired
     private JwtUtil jwtUtil;
+    @Autowired
+    private ClientRepository clientRepository;
 
     private PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
 
@@ -39,7 +42,22 @@ public class AbonneController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Abonne> abonneById(@PathVariable int id){
+    public ResponseEntity<?> abonneById(@PathVariable int id , @RequestHeader("Authorization") String authHeader){
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Missing or invalid Authorization header");
+        }
+
+        String token = authHeader.substring(7); // remove "Bearer "
+
+        if (!jwtUtil.validateToken(token)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token");
+        }
+
+        String email = jwtUtil.extractEmail(token);
+        Optional<Client> user = Optional.ofNullable(clientRepository.getClientByEmail(email));
+        if (user.isPresent()) {
+            user.get().getVisitedAbonnes().add(abonneService.getAbonneById(id));
+        }
         return ResponseEntity.ok(abonneService.getAbonneById(id));
     }
 
