@@ -165,14 +165,22 @@ public class StatisticsManager implements StatisticsService {
     @Override
     public Map<LocalDate , Integer>  totalNewAbonnesPerDay() {
         Map<LocalDate , Integer> map = new HashMap<>();
-        map.put(LocalDate.now(), (int) abonneRepository.findAll().stream().filter(a -> a.getCreation_date()==LocalDate.now()).count());
+        List<Abonne> list = abonneRepository.findAll();
+        Integer total = 0;
+        for (Abonne a : list) {
+            if(Objects.equals(a.getCreation_date(), LocalDate.now())){
+                total++;
+            }
+        }
+        map.put(LocalDate.now(), total);
+//        map.put(LocalDate.now(), (int) abonneRepository.findAll().stream().filter(a -> a.getCreation_date()==LocalDate.now()).count());
         return map;
     }
 
     @Override
     public Map<LocalDate, Integer> totalNewClientsPerDay() {
         Map<LocalDate , Integer> map = new HashMap<>();
-        map.put(LocalDate.now(), (int) clientRepository.findAll().stream().filter(a -> a.getCreation_date()==LocalDate.now()).count());
+        map.put(LocalDate.now(), (int) clientRepository.findAll().stream().filter(a -> Objects.equals(a.getCreation_date(), LocalDate.now())).count());
         return map;
     }
 
