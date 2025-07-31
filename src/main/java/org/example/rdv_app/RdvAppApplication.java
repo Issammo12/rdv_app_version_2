@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+import org.springframework.scheduling.annotation.EnableScheduling;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalField;
@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 @SpringBootApplication
+@EnableScheduling
 public class RdvAppApplication implements CommandLineRunner {
 	@Autowired
 	AbonneRepository abonneRepository;

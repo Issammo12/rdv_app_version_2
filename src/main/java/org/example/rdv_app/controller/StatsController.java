@@ -1,11 +1,13 @@
 package org.example.rdv_app.controller;
 
+import jdk.jfr.Timespan;
 import org.example.rdv_app.dao.entities.Abonne;
 import org.example.rdv_app.dao.entities.Client;
 import org.example.rdv_app.dao.entities.Evenement;
 import org.example.rdv_app.dao.entities.Offre;
 import org.example.rdv_app.metier.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -51,21 +53,25 @@ public class StatsController {
         return service.getClients();
     }
 
-    @PostMapping("/supprimer-abonne")
-    public void supprimerAbonne(@RequestBody Abonne abonne) {
+    @DeleteMapping("/supprimer-abonne/{id}")
+    public String supprimerAbonne(@PathVariable int abonne) {
         service.supprimerCompteAbonne(abonne);
+        return "success";
     }
-    @PostMapping("/supprimer-client")
-    public void supprimerClient(@RequestBody Client client) {
+    @DeleteMapping("/supprimer-client/{id}")
+    public String supprimerClient(@PathVariable int client) {
         service.supprimerCompteClient(client);
+        return "success";
     }
-    @PostMapping("/disable-abonne")
-    public void disableAbonne(@RequestBody Abonne abonne) {
+    @PostMapping("/disable-abonne/{id}")
+    public String disableAbonne(@PathVariable int abonne) {
         service.desactiverCompteAbonne(abonne);
+        return "success";
     }
-    @PostMapping("/disable-client")
-    public void disableClient(@RequestBody Client client) {
+    @PostMapping("/disable-client/{id}")
+    public String disableClient(@PathVariable int client) {
         service.desactiverCompteClient(client);
+        return "success";
     }
     @GetMapping("/number-rv/{id}")
     public int numberRV(@PathVariable int id) {
@@ -76,7 +82,7 @@ public class StatsController {
         return service.totalRevenusByAbonne(id);
     }
     @GetMapping("/mostTakenOffres/{id}")
-    public Map<String, Integer> mostTakenOffres(@PathVariable int id) {
+    public Map<String, Long> mostTakenOffres(@PathVariable int id) {
         return service.mostTakenOffresByAbonne(id);
     }
     @GetMapping("/number-rv-client/{id}")
@@ -91,7 +97,7 @@ public class StatsController {
     public Map<Evenement , Integer> popularEvents(@PathVariable int id) {
         return service.popularEvents(id);
     }
-
+    @Scheduled(fixedRate = 300000)
     @GetMapping("/new-abonnes-day")
     public Map<LocalDate , Integer> newAbonnesDay() {
         return service.totalNewAbonnesPerDay();

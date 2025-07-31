@@ -1,5 +1,6 @@
 package org.example.rdv_app.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,11 +27,15 @@ public class Client {
     private boolean active=true;
     private LocalDate creation_date = LocalDate.now();
     @OneToMany(mappedBy = "client")
+    @JsonIgnore
     private List<RendezVous> rendezVousList;
     @OneToMany(mappedBy = "client")
+    @JsonIgnore
     private List<Evenement> evenementList;
     @OneToMany(mappedBy = "client")
+    @JsonIgnore
     private List<Abonne> visitedAbonnes;
     @ManyToOne
+    @JsonIgnore
     private CodePromo codePromo;
 }

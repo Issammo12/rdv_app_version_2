@@ -85,23 +85,23 @@ public class StatisticsManager implements StatisticsService {
     }
 
     @Override
-    public void supprimerCompteAbonne(Abonne a) {
-        abonneRepository.delete(a);
+    public void supprimerCompteAbonne(int a) {
+        abonneRepository.delete(abonneRepository.findById(a).get());
     }
 
     @Override
-    public void supprimerCompteClient(Client c) {
-        clientRepository.delete(c);
+    public void supprimerCompteClient(int a) {
+        clientRepository.delete(clientRepository.findById(a).get());
     }
 
     @Override
-    public void desactiverCompteAbonne(Abonne a) {
-        a.setActive(false);
+    public void desactiverCompteAbonne(int a) {
+        abonneRepository.findById(a).get().setActive(false);
     }
 
     @Override
-    public void desactiverCompteClient(Client c) {
-        c.setActive(false);
+    public void desactiverCompteClient(int a) {
+        clientRepository.findById(a).get().setActive(false);
     }
 
     @Override
@@ -115,18 +115,10 @@ public class StatisticsManager implements StatisticsService {
     }
 
     @Override
-    public Map<String , Integer> mostTakenOffresByAbonne(int abonneId) {
-        RendezVous[] list = abonneRepository.findById(abonneId).get().getRendezVousList().stream().toArray(RendezVous[]::new);
+    public Map<String , Long> mostTakenOffresByAbonne(int abonneId) {
+        List<RendezVous> list = abonneRepository.findById(abonneId).get().getRendezVousList();
         int total = 0;
-        Map<String , Integer> map = new HashMap<>();
-        for (int i=0 ; i<list.length ; i++ ){
-            for(int j=i+1 ; j<list.length ; j++ ){
-                if(list[i].getOffre()==list[j].getOffre()){
-                    total++;
-                }
-            }
-            map.put(list[i].getOffre().getNom(), total);
-        }
+        Map<String , Long> map = list.stream().collect(Collectors.groupingBy(e -> e.getOffre().getNom(), Collectors.counting()));;
         return map;
     }
 

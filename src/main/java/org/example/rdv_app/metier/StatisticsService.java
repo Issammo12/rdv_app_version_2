@@ -22,14 +22,14 @@ public interface StatisticsService {
 
     public int totalNumberOfAbonnesByMonth();
 
-    public void supprimerCompteAbonne(Abonne a);
-    public void supprimerCompteClient(Client c);
-    public void desactiverCompteAbonne(Abonne a);
-    public void desactiverCompteClient(Client c);
+    public void supprimerCompteAbonne(int a);
+    public void supprimerCompteClient(int c);
+    public void desactiverCompteAbonne(int a);
+    public void desactiverCompteClient(int c);
     public int totalNumberOfRVByAbonne(int abonneId);
     public int totalRevenusByAbonne(int abonneId);
 
-    public Map<String,Integer> mostTakenOffresByAbonne(int abonneId);
+    public Map<String,Long> mostTakenOffresByAbonne(int abonneId);
 
     public int totalNumberOfRVByClient(int clientId);
 
