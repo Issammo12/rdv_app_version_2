@@ -82,7 +82,7 @@ public class StatsController {
         return service.totalRevenusByAbonne(id);
     }
     @GetMapping("/mostTakenOffres/{id}")
-    public Map<String, Long> mostTakenOffres(@PathVariable int id) {
+    public List<Object> mostTakenOffres(@PathVariable int id) {
         return service.mostTakenOffresByAbonne(id);
     }
     @GetMapping("/number-rv-client/{id}")
@@ -94,7 +94,7 @@ public class StatsController {
         return service.allOffresByClient(id);
     }
     @GetMapping("/popularEvents/{id}")
-    public Map<Evenement , Integer> popularEvents(@PathVariable int id) {
+    public List<Object> popularEvents(@PathVariable int id) {
         return service.popularEvents(id);
     }
     @Scheduled(fixedRate = 300000)

@@ -29,13 +29,13 @@ public interface StatisticsService {
     public int totalNumberOfRVByAbonne(int abonneId);
     public int totalRevenusByAbonne(int abonneId);
 
-    public Map<String,Long> mostTakenOffresByAbonne(int abonneId);
+    public List<Object> mostTakenOffresByAbonne(int abonneId);
 
     public int totalNumberOfRVByClient(int clientId);
 
     public List<Offre> allOffresByClient(int clientId);
 
-    public Map<Evenement,Integer> popularEvents(int abonneId);
+    public List<Object> popularEvents(int abonneId);
 
     public int totalEventsByClient(int clientId);
     //ces methodes en bas sont les graphes du back-office

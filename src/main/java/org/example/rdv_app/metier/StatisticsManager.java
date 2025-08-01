@@ -115,11 +115,22 @@ public class StatisticsManager implements StatisticsService {
     }
 
     @Override
-    public Map<String , Long> mostTakenOffresByAbonne(int abonneId) {
+    public List<Object> mostTakenOffresByAbonne(int abonneId) {
+        class Result{
+            public String nom;
+            public Long number;
+        }
         List<RendezVous> list = abonneRepository.findById(abonneId).get().getRendezVousList();
         int total = 0;
-        Map<String , Long> map = list.stream().collect(Collectors.groupingBy(e -> e.getOffre().getNom(), Collectors.counting()));;
-        return map;
+        Map<String , Long> map = list.stream().collect(Collectors.groupingBy(e -> e.getOffre().getNom(), Collectors.counting()));
+        List<Result> results = new ArrayList<>();
+        for (String key : map.keySet()) {
+            Result r = new Result();
+            r.nom = key;
+            r.number=map.get(key);
+            results.add(r);
+        }
+        return Collections.singletonList(results);
     }
 
     @Override
@@ -133,20 +144,23 @@ public class StatisticsManager implements StatisticsService {
     }
 
     @Override
-    public Map<Evenement , Integer> popularEvents(int abonneId) {
-        Map<Evenement , Integer> map = new HashMap<>();
-        int total =0;
-        List<Evenement> list=abonneRepository.findById(abonneId).get().getEvenementList();
-        List<Client> clients=clientRepository.findAll();
-        for (Evenement e : list ) {
-            for (Client c : clients ) {
-                for (Evenement ev : c.getEvenementList()) {
-                    if(e==ev) total++;
-                }
-            }
-            map.put(e, total);
+    public List<Object> popularEvents(int abonneId) {
+        class Result{
+            public String nom;
+            public Long number;
         }
-        return map;
+        List<Evenement> list = abonneRepository.findById(abonneId).get().getEvenementList();
+        int total = 0;
+        Map<String , Long> map = list.stream().collect(Collectors.groupingBy(e -> e.getTitre(), Collectors.counting()));
+        List<Result> results = new ArrayList<>();
+        for (String key : map.keySet()) {
+            Result r = new Result();
+            r.nom = key;
+            r.number=map.get(key);
+            results.add(r);
+        }
+
+        return Collections.singletonList(results);
     }
 
     @Override
