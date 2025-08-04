@@ -16,10 +16,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalField;
 import java.time.temporal.ValueRange;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 @EnableScheduling
@@ -54,8 +52,8 @@ public class RdvAppApplication implements CommandLineRunner {
 
 		Abonne abonne = new Abonne();
 		abonne.setAbonne_id(null);
-		abonne.setNom("Mounir");
-		abonne.setPrenom("Mounir");
+		abonne.setNom("issam");
+		abonne.setPrenom("issam");
 		abonne.setEmail("lajigamomo@gmail.com");
 		abonne.setPassword("archiissam123456");
 		abonne.setProfession("architecte");
@@ -166,6 +164,26 @@ public class RdvAppApplication implements CommandLineRunner {
 		int a =Calendar.DAY_OF_MONTH;
 		System.out.println(a);
 
+
+		Abonne abonne1 = new Abonne();
+		abonne1.setAbonne_id(null);
+		abonne1.setNom("issamz");
+		abonne1.setPrenom("issamz");
+		abonne1.setEmail("lajigamomo@gmail.com");
+		abonne1.setPassword("archiissam123456");
+		abonne1.setProfession("architecte");
+		abonne1.setAdresse("Casablanca");
+		abonne1.setTelephone("1234567890");
+		abonne1.setCreation_date(LocalDate.of(2025 , 8 , 03));
+
+
+
+		System.out.println(abonne1.toString());
+		abonneRepository.save(abonne1);
+
+		List<Abonne> liste = abonneRepository.findAll();
+		Map<LocalDate , Long> map = liste.stream().collect(Collectors.groupingBy(e -> e.getCreation_date(), Collectors.counting()));
+		System.out.println(map.toString());
 
 
 	}

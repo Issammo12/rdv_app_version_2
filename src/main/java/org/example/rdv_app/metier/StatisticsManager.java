@@ -32,6 +32,8 @@ public class StatisticsManager implements StatisticsService {
     private OffreRepository offreRepository;
     @Autowired
     private CodePromoRepository codePromoRepository;
+    @Autowired
+    private PaymentRepository paymentRepository;
     @Override
     public int totalNumberOfUsers() {
         return abonneRepository.findAll().size()+clientRepository.findAll().size();
@@ -169,24 +171,18 @@ public class StatisticsManager implements StatisticsService {
     }
 
     @Override
-    public Map<LocalDate , Integer>  totalNewAbonnesPerDay() {
-        Map<LocalDate , Integer> map = new HashMap<>();
-        List<Abonne> list = abonneRepository.findAll();
-        Integer total = 0;
-        for (Abonne a : list) {
-            if(Objects.equals(a.getCreation_date(), LocalDate.now())){
-                total++;
-            }
-        }
-        map.put(LocalDate.now(), total);
-//        map.put(LocalDate.now(), (int) abonneRepository.findAll().stream().filter(a -> a.getCreation_date()==LocalDate.now()).count());
+    public Map<LocalDate , Long>  totalNewAbonnesPerDay() {
+        List<Abonne> liste = abonneRepository.findAll();
+        Map<LocalDate , Long> map = liste.stream().collect(Collectors.groupingBy(e -> e.getCreation_date(), Collectors.counting()));
+
         return map;
     }
 
     @Override
-    public Map<LocalDate, Integer> totalNewClientsPerDay() {
-        Map<LocalDate , Integer> map = new HashMap<>();
-        map.put(LocalDate.now(), (int) clientRepository.findAll().stream().filter(a -> Objects.equals(a.getCreation_date(), LocalDate.now())).count());
+    public Map<LocalDate, Long> totalNewClientsPerDay() {
+        List<Client> liste = clientRepository.findAll();
+        Map<LocalDate , Long> map = liste.stream().collect(Collectors.groupingBy(e -> e.getCreation_date(), Collectors.counting()));
+
         return map;
     }
 
@@ -205,6 +201,18 @@ public class StatisticsManager implements StatisticsService {
     @Override
     public List<Client> listClientsVisitedAbonne(int abonneId) {
         return clientRepository.findAll().stream().filter(c -> c.getVisitedAbonnes().contains(abonneId)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<LocalDate, Long> totalNewPaymentsPerDay() {
+        List<Payment> liste = paymentRepository.findAll();
+        Map<LocalDate , Long> map = liste.stream().collect(Collectors.groupingBy(e -> LocalDate.parse(e.getTransaction_created_at()), Collectors.counting()));
+        return map;
+    }
+
+    @Override
+    public List<Payment> listPayments() {
+        return paymentRepository.findAll();
     }
 
 

@@ -1,10 +1,7 @@
 package org.example.rdv_app.controller;
 
 import jdk.jfr.Timespan;
-import org.example.rdv_app.dao.entities.Abonne;
-import org.example.rdv_app.dao.entities.Client;
-import org.example.rdv_app.dao.entities.Evenement;
-import org.example.rdv_app.dao.entities.Offre;
+import org.example.rdv_app.dao.entities.*;
 import org.example.rdv_app.metier.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -99,12 +96,12 @@ public class StatsController {
     }
     @Scheduled(fixedRate = 300000)
     @GetMapping("/new-abonnes-day")
-    public Map<LocalDate , Integer> newAbonnesDay() {
+    public Map<LocalDate , Long> newAbonnesDay() {
         return service.totalNewAbonnesPerDay();
     }
-
+    @Scheduled(fixedRate = 300000)
     @GetMapping("/new-clients-day")
-    public Map<LocalDate , Integer> newClientsDay() {
+    public Map<LocalDate , Long> newClientsDay() {
         return service.totalNewClientsPerDay();
     }
     @GetMapping("/views/{id}")
@@ -120,5 +117,15 @@ public class StatsController {
     @GetMapping("/list-clients-visiting-abonne/{id}")
     public List<Client> listClientsVisitingAbonne(@PathVariable int id) {
         return service.listClientsVisitedAbonne(id);
+    }
+    @Scheduled(fixedRate = 300000)
+    @GetMapping("/new-payments-day")
+    public Map<LocalDate,Long> newPaymentsDay() {
+        return service.totalNewPaymentsPerDay();
+    }
+
+    @GetMapping("/list-payments")
+    public List<Payment> listPayments() {
+        return service.listPayments();
     }
 }
