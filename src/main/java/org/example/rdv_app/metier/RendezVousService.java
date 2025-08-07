@@ -22,4 +22,7 @@ public interface RendezVousService {
     public Abonne getAbonne(int id);
 
     public Client getClient(int id);
+
+    public String confirmerRV(int id);
+    public String annulerRV(int id);
 }

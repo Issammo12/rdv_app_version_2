@@ -1,11 +1,9 @@
 package org.example.rdv_app;
 
-import jdk.jfr.Timespan;
 import org.example.rdv_app.dao.entities.*;
 import org.example.rdv_app.dao.repositories.*;
 import org.example.rdv_app.dao.utils.Statut;
 import org.example.rdv_app.metier.AbonneService;
-import org.example.rdv_app.metier.DemandeRVService;
 import org.example.rdv_app.metier.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,9 +11,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import java.time.LocalDate;
-import java.time.temporal.ChronoField;
-import java.time.temporal.TemporalField;
-import java.time.temporal.ValueRange;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -36,12 +31,10 @@ public class RdvAppApplication implements CommandLineRunner {
     private CodePromoRepository codePromoRepository;
     @Autowired
     private AbonneService abonneService;
-    @Autowired
-    private DemandeRVService demandeRVService;
+
     @Autowired
     private EmailService emailService;
-    @Autowired
-    private DemandeRVRepository demandeRVRepository;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(RdvAppApplication.class, args);
@@ -134,28 +127,10 @@ public class RdvAppApplication implements CommandLineRunner {
 		double p=abonneService.appliquerCode(codePromo , offre);
 		System.out.println(p);
 
-//		abonne.getOffreList().add(offre);
-//		abonne.getCreneauList().add(creneau);
-//		abonne.getRendezVousList().add(rendezVous);
-//
-//		client.getRendezVousList().add(rendezVous);
 
-
-		DemandeRV demandeRV = new DemandeRV();
-		demandeRV.setId(null);
-		demandeRV.setConfirmation(true);
-		demandeRV.setRendezVous(rendezVous);
-		System.out.println(demandeRV.toString());
-//		demandeRVRepository.save(demandeRV);
 
 		System.out.println(creneau.getDate().getDate() + 1);
 
-		List<DemandeRV> list =demandeRVRepository.findAll();
-		for (DemandeRV dm:
-			 list) {
-			emailService.rappelHeureRvEmail(dm);
-			emailService.rappelVeilleRvEmail(dm);
-		}
 
 		System.out.println(java.sql.Date.valueOf(LocalDate.now()).after(rendezVousRepository.findById(1).get().getCreneau().getDate()));
 

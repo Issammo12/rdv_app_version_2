@@ -161,9 +161,13 @@ public class AbonneController {
         }
 
         Abonne user = new Abonne();
-        user.setNom(request.name);
+        user.setNom(request.nom);
         user.setEmail(request.email);
         user.setPassword(passwordEncoder.encode(request.password));
+        user.setTelephone(request.telephone);
+        user.setProfession(request.profession);
+        user.setAdresse(request.adresse);
+        user.setPrenom(request.prenom);
         abonneRepository.save(user);
 
         String token = jwtUtil.generateToken(user);

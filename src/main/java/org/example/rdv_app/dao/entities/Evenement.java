@@ -23,6 +23,8 @@ public class Evenement{
     private String fin;
     private String status;
     private int nbr_place;
+    private int prix;
+    private String description;
     @ManyToOne
     @JoinColumn(name = "abonne_id")
     @JsonIgnore

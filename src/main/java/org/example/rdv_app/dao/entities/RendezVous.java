@@ -28,6 +28,6 @@ public class RendezVous {
     private Abonne abonne;
     @ManyToOne
     @JoinColumn(name = "client_id")
-    @JsonIgnore
+//    @JsonIgnore
     private Client client;
 }

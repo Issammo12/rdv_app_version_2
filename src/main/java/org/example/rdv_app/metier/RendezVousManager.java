@@ -78,4 +78,16 @@ public class RendezVousManager implements RendezVousService {
     public Client getClient(int id) {
         return rendezVousRepo.findById(id).get().getClient();
     }
+    public String confirmerRV(int id) {
+        RendezVous rv=rendezVousRepo.findById(id).get();
+        rv.setStatus(Statut.Confirmé);
+       return "rendez-vous has been confirmed";
+    }
+
+    @Override
+    public String annulerRV(int id) {
+        RendezVous rv=rendezVousRepo.findById(id).get();
+        rv.setStatus(Statut.Annulé);
+        return "rendez-vous has been cancelled";
+    }
 }

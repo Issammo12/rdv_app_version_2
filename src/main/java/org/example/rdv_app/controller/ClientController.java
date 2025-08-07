@@ -122,7 +122,7 @@ public class ClientController {
         }
 
         Client user = new Client();
-        user.setNom(request.name);
+        user.setNom(request.nom);
         user.setEmail(request.email);
         user.setPassword(passwordEncoder.encode(request.password));
         clientRepository.save(user);
