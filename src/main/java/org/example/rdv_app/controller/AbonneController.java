@@ -42,23 +42,23 @@ public class AbonneController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> abonneById(@PathVariable int id , @RequestHeader("Authorization") String authHeader){
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Missing or invalid Authorization header");
-        }
-
-        String token = authHeader.substring(7); // remove "Bearer "
-
-        if (!jwtUtil.validateToken(token)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token");
-        }
-
-        String email = jwtUtil.extractEmail(token);
-        Optional<Client> user = Optional.ofNullable(clientRepository.getClientByEmail(email));
-        if (user.isPresent()) {
-            user.get().getVisitedAbonnes().add(abonneService.getAbonneById(id));
-        }
-        return ResponseEntity.ok(abonneService.getAbonneById(id));
+    public Abonne abonneById(@PathVariable int id){
+//        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Missing or invalid Authorization header");
+//        }
+//
+//        String token = authHeader.substring(7); // remove "Bearer "
+//
+//        if (!jwtUtil.validateToken(token)) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token");
+//        }
+//
+//        String email = jwtUtil.extractEmail(token);
+//        Optional<Client> user = Optional.ofNullable(clientRepository.getClientByEmail(email));
+//        if (user.isPresent()) {
+//            user.get().getVisitedAbonnes().add(abonneService.getAbonneById(id));
+//        }
+        return abonneService.getAbonneById(id);
     }
 
     @PostMapping("/add")
