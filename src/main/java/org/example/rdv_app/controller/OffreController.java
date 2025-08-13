@@ -48,4 +48,7 @@ public class OffreController {
     public List<Offre> getOffreByCategory(@RequestParam String category){
         return offreService.getOffreByCategory(category);
     }
+    @GetMapping("/all-categories")
+public List<String> getAllCategories(){
+    return offreService.CategoryList();}
 }

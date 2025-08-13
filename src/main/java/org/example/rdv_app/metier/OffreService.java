@@ -13,4 +13,5 @@ public interface OffreService {
     public Offre addOffre(Offre offre);
     public Offre updateOffre(Offre offre);
     public boolean deleteOffre(int id);
+    public List<String> CategoryList();
 }

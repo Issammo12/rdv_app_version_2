@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class OffreManager implements OffreService{
     @Autowired
@@ -45,5 +47,10 @@ public class OffreManager implements OffreService{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<String> CategoryList() {
+        return offreRepo.findAll().stream().map(Offre::getCategory).distinct().collect(Collectors.toList());
     }
 }

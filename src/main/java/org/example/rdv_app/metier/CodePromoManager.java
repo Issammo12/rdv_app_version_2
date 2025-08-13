@@ -1,6 +1,7 @@
 package org.example.rdv_app.metier;
 
 import org.example.rdv_app.dao.entities.CodePromo;
+import org.example.rdv_app.dao.repositories.AbonneRepository;
 import org.example.rdv_app.dao.repositories.CodePromoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ public class CodePromoManager implements CodePromoService {
     private CodePromoRepository codePromoRepository;
     @Autowired
     private AbonneService abonneService;
+    @Autowired
+    private AbonneRepository abonneRepository;
+
     @Override
     public CodePromo addCodePromo(CodePromo codePromo) {
         if(!codePromoRepository.existsById(codePromo.getCode_id())){
@@ -47,5 +51,10 @@ public class CodePromoManager implements CodePromoService {
         if (codePromo.getClientList().size() == codePromo.getNbr_users() || codePromo.getDateFin()== Date.valueOf(LocalDate.now())) {
             codePromo.setActive(false);
         }
+    }
+
+    @Override
+    public CodePromo findCodePromoById(int id) {
+        return codePromoRepository.findByAbonne(abonneRepository.findById(id).get());
     }
 }

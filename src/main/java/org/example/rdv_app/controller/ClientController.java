@@ -125,7 +125,10 @@ public class ClientController {
         user.setNom(request.nom);
         user.setEmail(request.email);
         user.setPassword(passwordEncoder.encode(request.password));
-        clientRepository.save(user);
+        user.setPrenom(request.prenom);
+        user.setAdresse(request.adresse);
+        user.setTelephone(request.telephone);
+        clientService.addClient(user);
 
         String token = jwtUtil.generateToken(user);
 

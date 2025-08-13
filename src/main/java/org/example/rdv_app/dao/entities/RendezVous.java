@@ -24,7 +24,7 @@ public class RendezVous {
     private Offre offre;
     @ManyToOne
     @JoinColumn(name = "abonne_id")
-    @JsonIgnore
+//    @JsonIgnore
     private Abonne abonne;
     @ManyToOne
     @JoinColumn(name = "client_id")

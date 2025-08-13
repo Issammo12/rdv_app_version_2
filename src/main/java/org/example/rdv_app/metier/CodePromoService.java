@@ -13,4 +13,6 @@ public interface CodePromoService {
     // methode pour appliquer le code promo
 
 //    public void appliquerCode(CodePromo codePromo);
+
+    public CodePromo findCodePromoById(int id);
 }

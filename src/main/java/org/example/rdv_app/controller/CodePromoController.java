@@ -35,4 +35,8 @@ public class CodePromoController {
         codePromoService.desactiverCodePromo(codePromo);
         return "Desactiver Code Promo Successfully";
     }
+    @GetMapping("/get-code-by-abonne-id/{id}")
+    public CodePromo findCodePromoByAbonneId(@PathVariable Integer id) {
+        return codePromoService.findCodePromoById(id);
+    }
 }

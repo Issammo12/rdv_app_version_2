@@ -27,5 +27,7 @@ public interface AbonneService {
     public double getTotalRevenus(Abonne a);
     public RendezVous todayRendezVous(Abonne a);
 
+    public CodePromo findCodePromoById(int id);
+
 
 }

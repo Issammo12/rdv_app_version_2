@@ -100,6 +100,10 @@ public class AbonneController {
         return abonneService.findAllEvenementById(id);
     }
 
+    @GetMapping("/codepromo/{id}")
+    public CodePromo codePromo(@PathVariable int id){
+        return abonneService.findCodePromoById(id);
+    }
     @GetMapping("/abonne-By-Profession")
     public List<Abonne> getAllAbonneByProfession(@RequestParam String profession){
         return abonneService.findAllAbonneByProfession(profession);
@@ -168,7 +172,8 @@ public class AbonneController {
         user.setProfession(request.profession);
         user.setAdresse(request.adresse);
         user.setPrenom(request.prenom);
-        abonneRepository.save(user);
+//        abonneRepository.save(user);
+        abonneService.addAbonne(user);
 
         String token = jwtUtil.generateToken(user);
 

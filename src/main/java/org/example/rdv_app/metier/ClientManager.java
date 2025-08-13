@@ -24,7 +24,7 @@ public class ClientManager implements ClientService{
 
     @Override
     public Client addClient(Client client) {
-        Client newClient = clientRepository.findById(client.getClient_id()).get();
+        Client newClient = clientRepository.getClientByEmail(client.getEmail());
         if(newClient == null){
             return clientRepository.save(client);
         }

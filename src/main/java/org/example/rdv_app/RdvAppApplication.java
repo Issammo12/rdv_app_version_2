@@ -45,8 +45,8 @@ public class RdvAppApplication implements CommandLineRunner {
 
 		Abonne abonne = new Abonne();
 		abonne.setAbonne_id(null);
-		abonne.setNom("issam");
-		abonne.setPrenom("issam");
+		abonne.setNom("iss");
+		abonne.setPrenom("is");
 		abonne.setEmail("lajigamomo@gmail.com");
 		abonne.setPassword("archiissam123456");
 		abonne.setProfession("architecte");
@@ -139,22 +139,6 @@ public class RdvAppApplication implements CommandLineRunner {
 		int a =Calendar.DAY_OF_MONTH;
 		System.out.println(a);
 
-
-		Abonne abonne1 = new Abonne();
-		abonne1.setAbonne_id(null);
-		abonne1.setNom("issamz");
-		abonne1.setPrenom("issamz");
-		abonne1.setEmail("lajigamomo@gmail.com");
-		abonne1.setPassword("archiissam123456");
-		abonne1.setProfession("architecte");
-		abonne1.setAdresse("Casablanca");
-		abonne1.setTelephone("1234567890");
-		abonne1.setCreation_date(LocalDate.of(2025 , 8 , 03));
-
-
-
-		System.out.println(abonne1.toString());
-		abonneRepository.save(abonne1);
 
 		List<Abonne> liste = abonneRepository.findAll();
 		Map<LocalDate , Long> map = liste.stream().collect(Collectors.groupingBy(e -> e.getCreation_date(), Collectors.counting()));

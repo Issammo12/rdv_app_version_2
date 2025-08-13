@@ -9,6 +9,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 @Service
 public class AbonneManager implements AbonneService{
     @Autowired
@@ -33,7 +35,7 @@ public class AbonneManager implements AbonneService{
 
     @Override
     public Abonne addAbonne(Abonne abonne) {
-        Abonne abonne1 = abonneRepository.findById(abonne.getAbonne_id()).get();
+        Abonne abonne1 = abonneRepository.getAbonneByEmail(abonne.getEmail());
         if (abonne1 == null) {
             return abonneRepository.save(abonne);
         }
@@ -116,11 +118,16 @@ public class AbonneManager implements AbonneService{
     public RendezVous todayRendezVous(Abonne a) {
         List<RendezVous> rendezVousList = a.getRendezVousList();
         for (RendezVous rendezVous : rendezVousList) {
-            if(rendezVous.getCreneau().getDate() == Date.valueOf(LocalDate.now())){
+            if(Objects.equals(rendezVous.getCreneau().getDate(), Date.valueOf(LocalDate.now()))){
                 return rendezVous;
             }
         }
         return null;
+    }
+
+    @Override
+    public CodePromo findCodePromoById(int id) {
+        return abonneRepository.findById(id).get().getCodePromo();
     }
 
 
