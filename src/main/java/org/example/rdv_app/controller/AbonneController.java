@@ -131,7 +131,7 @@ public class AbonneController {
 
         Map<String, Object> response = new HashMap<>();
         response.put("token", token);
-        response.put("user", user); // You might want to send a DTO instead
+        response.put("abonne", user); // You might want to send a DTO instead
 
         return ResponseEntity.ok(response);
     }
@@ -175,13 +175,13 @@ public class AbonneController {
 //        abonneRepository.save(user);
         abonneService.addAbonne(user);
 
-        String token = jwtUtil.generateToken(user);
+//        String token = jwtUtil.generateToken(user);
+//
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("token", token);
+//        response.put("abonne", user);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("token", token);
-        response.put("abonne", user);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok("Register success");
     }
 
     @GetMapping("/getTotalRendezVous")

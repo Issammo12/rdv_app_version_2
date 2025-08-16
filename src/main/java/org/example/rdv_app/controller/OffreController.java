@@ -1,18 +1,26 @@
 package org.example.rdv_app.controller;
 
+import org.example.rdv_app.dao.entities.Abonne;
 import org.example.rdv_app.dao.entities.Offre;
+import org.example.rdv_app.dao.repositories.AbonneRepository;
+import org.example.rdv_app.dao.utils.JwtUtil;
 import org.example.rdv_app.metier.OffreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/offre")
 public class OffreController {
     @Autowired
     private OffreService offreService;
-
+    @Autowired
+    private JwtUtil jwtUtil;
+    @Autowired
+    private AbonneRepository abonneRepository;
     @GetMapping("/list")
     public List<Offre> getOffreList(){
         return offreService.getAllOffre();
@@ -24,8 +32,12 @@ public class OffreController {
     }
 
     @PostMapping("/add")
-    public Offre addOffre(@RequestBody Offre offre){
-        return offreService.addOffre(offre);
+    public ResponseEntity<String> addOffre(@RequestBody Offre offre , @RequestHeader("Authorization") String authHeader){
+        String token = authHeader.substring(7);
+        String email = jwtUtil.extractEmail(token);
+        Optional<Abonne> user = Optional.ofNullable(abonneRepository.getAbonneByEmail(email));
+        Offre o= offreService.addOffre(offre , user.get().getId());
+        return ResponseEntity.ok("Offre added succesfuly");
     }
 
     @PutMapping("update")

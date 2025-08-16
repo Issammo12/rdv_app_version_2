@@ -10,7 +10,7 @@ public interface OffreService {
     public List<Offre> getAllOffre();
     public Offre getOffreById(int id);
     public List<Offre> getOffreByCategory(String category);
-    public Offre addOffre(Offre offre);
+    public Offre addOffre(Offre offre , int id);
     public Offre updateOffre(Offre offre);
     public boolean deleteOffre(int id);
     public List<String> CategoryList();

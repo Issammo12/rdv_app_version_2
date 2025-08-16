@@ -1,6 +1,8 @@
 package org.example.rdv_app.metier;
 
+import org.example.rdv_app.dao.entities.Abonne;
 import org.example.rdv_app.dao.entities.Offre;
+import org.example.rdv_app.dao.repositories.AbonneRepository;
 import org.example.rdv_app.dao.repositories.OffreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,9 @@ import java.util.stream.Collectors;
 public class OffreManager implements OffreService{
     @Autowired
     private OffreRepository offreRepo;
+    @Autowired
+    private AbonneRepository abonneRepository;
+
     @Override
     public List<Offre> getAllOffre() {
         return offreRepo.findAll();
@@ -28,8 +33,10 @@ public class OffreManager implements OffreService{
     }
 
     @Override
-    public Offre addOffre(Offre offre) {
+    public Offre addOffre(Offre offre , int id) {
+        Abonne abonne = abonneRepository.findById(id).get();
         if(offreRepo.existsById(offre.getId())==false) {
+            offre.setAbonne(abonne);
             return offreRepo.save(offre);
         }
         return null;

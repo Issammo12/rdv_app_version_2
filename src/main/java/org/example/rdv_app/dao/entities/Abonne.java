@@ -22,7 +22,7 @@ import java.util.List;
 public class Abonne implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer abonne_id;
+    private Integer id;
     private String nom;
     private String prenom;
     private String adresse;

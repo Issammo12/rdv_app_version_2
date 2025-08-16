@@ -19,7 +19,7 @@ public class JwtUtil {
 //        SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
         return Jwts.builder()
                 .setSubject(user.getEmail())
-                .claim("userId", user.getAbonne_id())
+                .claim("userId", user.getId())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 day
                 .signWith(secretKey)
@@ -31,7 +31,7 @@ public class JwtUtil {
 //        SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
         return Jwts.builder()
                 .setSubject(user.getEmail())
-                .claim("userId", user.getClient_id())
+                .claim("userId", user.getId())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 day
                 .signWith(secretKey)

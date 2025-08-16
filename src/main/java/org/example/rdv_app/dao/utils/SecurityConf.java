@@ -27,7 +27,7 @@ public class SecurityConf {
                                 .contentSecurityPolicy(csp -> csp.policyDirectives("script-src 'self'"))
                 )
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/abonne/login", "/abonne/register" , "/client/login", "/client/register").permitAll().anyRequest().authenticated()
+                        auth.requestMatchers("/login", "/abonne/register" , "/current-user","/logout" ,"/client/register").permitAll().anyRequest().authenticated()
                 );
 
         return http.build();
