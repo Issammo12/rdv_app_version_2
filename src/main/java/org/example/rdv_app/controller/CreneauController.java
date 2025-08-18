@@ -1,5 +1,6 @@
 package org.example.rdv_app.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.rdv_app.dao.entities.Creneau;
 import org.example.rdv_app.metier.CreneauService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,9 @@ public class CreneauController {
     }
 
     @PostMapping("/add")
-    public Creneau addCreneau(@RequestBody Creneau creneau) {
-        return creneauService.addCreneau(creneau);
+    public Creneau addCreneau(@RequestBody Creneau creneau , HttpSession session) {
+        int id = (int) session.getAttribute("id");
+        return creneauService.addCreneau(creneau , id);
     }
 
     @PutMapping("/update")

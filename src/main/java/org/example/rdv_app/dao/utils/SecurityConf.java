@@ -2,6 +2,7 @@ package org.example.rdv_app.dao.utils;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.web.cors.CorsConfiguration;
@@ -27,8 +28,12 @@ public class SecurityConf {
                                 .contentSecurityPolicy(csp -> csp.policyDirectives("script-src 'self'"))
                 )
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/login", "/abonne/register" , "/current-user","/logout" ,"/client/register").permitAll().anyRequest().authenticated()
+                        auth.requestMatchers("/**").permitAll().anyRequest().authenticated()
                 );
+        http.sessionManagement(session ->
+                session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+        );
+
 
         return http.build();
     }

@@ -35,11 +35,15 @@ public class OffreManager implements OffreService{
     @Override
     public Offre addOffre(Offre offre , int id) {
         Abonne abonne = abonneRepository.findById(id).get();
-        if(offreRepo.existsById(offre.getId())==false) {
-            offre.setAbonne(abonne);
-            return offreRepo.save(offre);
-        }
-        return null;
+        Offre o=new Offre();
+        o.setCategory(offre.getCategory());
+        o.setDescription(offre.getDescription());
+        o.setDuration(offre.getDuration());
+        o.setPrice(offre.getPrice());
+        o.setNom(offre.getNom());
+        List<Offre> offres=abonne.getOffreList();
+        offres.add(o);
+        return offreRepo.save(o);
     }
 
     @Override

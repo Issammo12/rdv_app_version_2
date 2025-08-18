@@ -9,7 +9,7 @@ import java.util.List;
 public interface CreneauService {
     public Creneau getCreneauById(int id);
     public List<Creneau> getAllCreneau();
-    public Creneau addCreneau(Creneau creneau);
+    public Creneau addCreneau(Creneau creneau , int id);
     public Creneau updateCreneau(Creneau creneau);
     public boolean deleteCreneauById(int id);
 

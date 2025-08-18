@@ -1,5 +1,6 @@
 package org.example.rdv_app.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.rdv_app.dao.entities.Abonne;
 import org.example.rdv_app.dao.entities.Offre;
 import org.example.rdv_app.dao.repositories.AbonneRepository;
@@ -23,6 +24,7 @@ public class OffreController {
     private AbonneRepository abonneRepository;
     @GetMapping("/list")
     public List<Offre> getOffreList(){
+
         return offreService.getAllOffre();
     }
 
@@ -32,12 +34,10 @@ public class OffreController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addOffre(@RequestBody Offre offre , @RequestHeader("Authorization") String authHeader){
-        String token = authHeader.substring(7);
-        String email = jwtUtil.extractEmail(token);
-        Optional<Abonne> user = Optional.ofNullable(abonneRepository.getAbonneByEmail(email));
-        Offre o= offreService.addOffre(offre , user.get().getId());
-        return ResponseEntity.ok("Offre added succesfuly");
+    public ResponseEntity<String> addOffre(@RequestBody Offre offre , HttpSession session){
+        int id = (int) session.getAttribute("id");
+        Offre o= offreService.addOffre(offre , id);
+        return ResponseEntity.ok("Offer added successfully" + o.toString());
     }
 
     @PutMapping("update")
