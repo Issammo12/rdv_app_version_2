@@ -1,8 +1,10 @@
 package org.example.rdv_app.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.rdv_app.dao.entities.Evenement;
 import org.example.rdv_app.metier.EvenementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +16,10 @@ public class EventController {
     private EvenementService evenementService;
 
     @PostMapping("/add")
-    public Evenement addEvenement(@RequestBody Evenement event) {
-        return evenementService.addEvenement(event);
+    public ResponseEntity<String> addEvenement(@RequestBody Evenement event , HttpSession session) {
+        int id = (int) session.getAttribute("id");
+        Evenement o = evenementService.addEvenement(event , id);
+        return ResponseEntity.ok("Event added successfully" + o.toString());
     }
 
     @PutMapping("/update")

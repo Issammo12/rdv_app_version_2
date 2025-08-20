@@ -41,8 +41,7 @@ public class OffreManager implements OffreService{
         o.setDuration(offre.getDuration());
         o.setPrice(offre.getPrice());
         o.setNom(offre.getNom());
-        List<Offre> offres=abonne.getOffreList();
-        offres.add(o);
+        o.setAbonne(abonne);
         return offreRepo.save(o);
     }
 

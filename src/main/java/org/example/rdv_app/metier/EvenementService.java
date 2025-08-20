@@ -9,7 +9,7 @@ import java.util.List;
 public interface EvenementService {
     public List<Evenement> getAllEvenements();
     public Evenement getEvenementById(int id);
-    public Evenement addEvenement(Evenement evenement);
+    public Evenement addEvenement(Evenement evenement , int id);
     public Evenement updateEvenement(Evenement evenement);
     public boolean deleteEvenementById(int id);
 

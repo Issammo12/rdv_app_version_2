@@ -1,6 +1,8 @@
 package org.example.rdv_app.metier;
 
+import org.example.rdv_app.dao.entities.Abonne;
 import org.example.rdv_app.dao.entities.Evenement;
+import org.example.rdv_app.dao.repositories.AbonneRepository;
 import org.example.rdv_app.dao.repositories.EvenementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,9 @@ import java.util.List;
 public class EvenementManager implements EvenementService {
     @Autowired
     private EvenementRepository eventRepo;
+    @Autowired
+    private AbonneRepository abonneRepository;
+
     @Override
     public List<Evenement> getAllEvenements() {
         return eventRepo.findAll();
@@ -21,11 +26,19 @@ public class EvenementManager implements EvenementService {
     }
 
     @Override
-    public Evenement addEvenement(Evenement evenement) {
-        if(eventRepo.existsById(evenement.getId())==false) {
-            return eventRepo.save(evenement);
-        }
-        return null;
+    public Evenement addEvenement(Evenement evenement , int id) {
+        Abonne a = abonneRepository.findById(id).get();
+        Evenement ev = new Evenement();
+        ev.setDate(evenement.getDate());
+        ev.setStatus(evenement.getStatus());
+        ev.setFin(evenement.getFin());
+        ev.setDebut(evenement.getDebut());
+        ev.setNbr_place(evenement.getNbr_place());
+        ev.setPrix(evenement.getPrix());
+        ev.setTitre(evenement.getTitre());
+        ev.setDescription(evenement.getDescription());
+        ev.setAbonne(a);
+        return eventRepo.save(ev);
     }
 
     @Override
