@@ -18,6 +18,7 @@ public class Creneau {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private int heure;
+    @Temporal(TemporalType.DATE)
     private Date date;
     @ManyToOne
     @JoinColumn(name = "abonne_id")

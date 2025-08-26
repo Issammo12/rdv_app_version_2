@@ -2,6 +2,7 @@ package org.example.rdv_app.controller;
 
 import jakarta.mail.AuthenticationFailedException;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpSession;
 import org.example.rdv_app.dao.entities.RendezVous;
 import org.example.rdv_app.dao.repositories.RendezVousRepository;
 import org.example.rdv_app.metier.EmailService;
@@ -24,14 +25,14 @@ public class RendezVousController {
     // les methodes pour recuperer abonne , client ...
 
     @PostMapping("/add")
-    public RendezVous addRendezVous(@RequestBody RendezVous rendezVous , @RequestHeader("Authorization") String token) throws MessagingException {
-        emailService.demandeRvEmail(rendezVous ,token);
+    public RendezVous addRendezVous(@RequestBody RendezVous rendezVous , HttpSession session) throws MessagingException {
+        emailService.demandeRvEmail(rendezVous , session);
         return rendezVousService.addRendezVous(rendezVous);
     }
 
     @PutMapping("/update")
-    public RendezVous update(@RequestBody RendezVous rendezVous ,@RequestHeader("Authorization") String token) throws MessagingException {
-        emailService.demandeRvEmail(rendezVous , token);
+    public RendezVous update(@RequestBody RendezVous rendezVous , HttpSession session) throws MessagingException {
+        emailService.demandeRvEmail(rendezVous , session);
         return rendezVousService.updateRendezVous(rendezVous);
     }
 
@@ -53,16 +54,16 @@ public class RendezVousController {
     }
 
     @GetMapping("/Confirm/{id}")
-    public String ConfirmDemandeRV(@PathVariable int demandeRV , @RequestHeader("Authorization") String token) throws AuthenticationFailedException, MessagingException {
-        emailService.confirmRvEmail(rendezVousRepository.getById(demandeRV), token);
-        rendezVousService.confirmerRV(demandeRV);
-        return "OK";
+    public String ConfirmDemandeRV(@PathVariable("id") int demandeRV , HttpSession session) throws AuthenticationFailedException, MessagingException {
+        emailService.confirmRvEmail(rendezVousRepository.getById(demandeRV), session);
+        return rendezVousService.confirmerRV(demandeRV);
+
     }
 
     @GetMapping("/cancel/{id}")
-    public String cancelDemandeRV(@PathVariable int demandeRV , @RequestHeader("Authorization") String token) throws AuthenticationFailedException , MessagingException {
-        emailService.cancelRvEmail(rendezVousRepository.getById(demandeRV) , token);
-        rendezVousService.annulerRV(demandeRV);
-        return "OK";
+    public String cancelDemandeRV(@PathVariable int demandeRV , HttpSession session) throws AuthenticationFailedException , MessagingException {
+        emailService.cancelRvEmail(rendezVousRepository.getById(demandeRV) , session);
+       return rendezVousService.annulerRV(demandeRV);
+
     }
 }

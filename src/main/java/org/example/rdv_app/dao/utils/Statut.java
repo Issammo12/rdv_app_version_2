@@ -1,5 +1,10 @@
 package org.example.rdv_app.dao.utils;
 
+import jakarta.persistence.Table;
+
+@Table(name = "enum")
 public enum Statut {
-    Confirmé , Attente , Annulé
+    CONFIRME
+    , ATTENTE
+    , ANNULE
 }

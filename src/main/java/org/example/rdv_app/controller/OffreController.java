@@ -40,9 +40,10 @@ public class OffreController {
         return ResponseEntity.ok("Offer added successfully" + o.toString());
     }
 
-    @PutMapping("update")
-    public Offre updateOffre(@RequestBody Offre offre){
-        return offreService.updateOffre(offre);
+    @PostMapping("/update")
+    public String updateOffre(@RequestBody Offre offre){
+        Offre o=offreService.updateOffre(offre);
+        return "Offer updated successfully" + o.toString();
     }
 
     @DeleteMapping("delete/{id}")

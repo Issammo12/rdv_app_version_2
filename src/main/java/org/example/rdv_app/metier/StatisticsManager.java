@@ -108,7 +108,7 @@ public class StatisticsManager implements StatisticsService {
 
     @Override
     public int totalNumberOfRVByAbonne(int abonneId) {
-        return (int) abonneRepository.findById(abonneId).get().getRendezVousList().stream().filter(rv -> rv.getStatus()== Statut.Confirmé).count();
+        return (int) abonneRepository.findById(abonneId).get().getRendezVousList().stream().filter(rv -> rv.getStatus()== Statut.CONFIRME).count();
     }
 
     @Override
@@ -137,7 +137,7 @@ public class StatisticsManager implements StatisticsService {
 
     @Override
     public int totalNumberOfRVByClient(int clientId) {
-        return (int) clientRepository.findById(clientId).get().getRendezVousList().stream().filter(rv -> rv.getStatus()== Statut.Confirmé).count();
+        return (int) clientRepository.findById(clientId).get().getRendezVousList().stream().filter(rv -> rv.getStatus()== Statut.CONFIRME).count();
     }
 
     @Override

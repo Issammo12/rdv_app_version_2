@@ -28,7 +28,7 @@ public class RendezVousManager implements RendezVousService {
     @Override
     public RendezVous addRendezVous(RendezVous rendezVous) {
         if(!rendezVousRepo.existsById(rendezVous.getId())) {
-            rendezVous.setStatus(Statut.Attente);
+            rendezVous.setStatus(Statut.ATTENTE);
             return rendezVousRepo.save(rendezVous);
         }
         return null;
@@ -80,14 +80,15 @@ public class RendezVousManager implements RendezVousService {
     }
     public String confirmerRV(int id) {
         RendezVous rv=rendezVousRepo.findById(id).get();
-        rv.setStatus(Statut.Confirmé);
+        rv.setStatus(Statut.CONFIRME);
+        rendezVousRepo.save(rv);
        return "rendez-vous has been confirmed";
     }
 
     @Override
     public String annulerRV(int id) {
         RendezVous rv=rendezVousRepo.findById(id).get();
-        rv.setStatus(Statut.Annulé);
+        rv.setStatus(Statut.ANNULE);
         return "rendez-vous has been cancelled";
     }
 }

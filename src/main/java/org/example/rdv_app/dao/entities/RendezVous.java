@@ -17,6 +17,7 @@ public class RendezVous {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 //    private boolean paymentReception;
+@Enumerated(EnumType.STRING)
     private Statut status;
     @OneToOne
     private Creneau creneau;

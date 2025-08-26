@@ -47,7 +47,13 @@ public class OffreManager implements OffreService{
 
     @Override
     public Offre updateOffre(Offre offre) {
-        return offreRepo.save(offre);
+        Offre o=offreRepo.findById(offre.getId()).get();
+        o.setDescription(offre.getDescription());
+        o.setDuration(offre.getDuration());
+        o.setPrice(offre.getPrice());
+        o.setNom(offre.getNom());
+        o.setCategory(offre.getCategory());
+        return offreRepo.save(o);
     }
 
     @Override

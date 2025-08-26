@@ -2,9 +2,11 @@ package org.example.rdv_app.metier;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpSession;
 import org.example.rdv_app.dao.entities.Abonne;
 import org.example.rdv_app.dao.entities.Client;
 import org.example.rdv_app.dao.entities.RendezVous;
+import org.example.rdv_app.dao.repositories.AbonneRepository;
 import org.example.rdv_app.dao.utils.EmailContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -22,25 +24,27 @@ public class EmailManager implements EmailService{
     private AuthService authService;
     @Autowired
     private EmailContent emailContent;
+    @Autowired
+    private AbonneRepository abonneRepository;
 
 
     @Override
-    public void demandeRvEmail(RendezVous demandeRV , @RequestHeader("Authorization") String authHeader) throws MessagingException {
+    public void demandeRvEmail(RendezVous demandeRV , HttpSession session) throws MessagingException {
 //        SimpleMailMessage message = new SimpleMailMessage();
         MimeMessage mimeMessage = mailSender.createMimeMessage();
 //        message.setFrom("issam.mounir.pro@gmail.com");
         mimeMessage.setFrom("issam.mounir.pro@gmail.com");
         mimeMessage.setSubject("demande d'un rendez-vous");
         EmailContent emailContent = new EmailContent();
-        Object object = authService.getUserByEmail(authHeader);
-        if (object.getClass().equals(Abonne.class)) {
+        String object= (String) session.getAttribute("class");
+        if (object.equals(Abonne.class)) {
             String html =emailContent.demandeEmailContent(demandeRV.getAbonne().getNom());
             mimeMessage.setContent(html , "text/html ; charset=utf-8");
             mimeMessage.setRecipients(MimeMessage.RecipientType.TO , demandeRV.getClient().getEmail());
             mailSender.send(mimeMessage);
             System.out.println("ok");
         }
-        if (object.getClass().equals(Client.class)) {
+        if (object.equals(Client.class)) {
             String html =emailContent.demandeEmailContent(demandeRV.getClient().getNom());
             mimeMessage.setContent(html , "text/html ; charset=utf-8");
             mimeMessage.setRecipients(MimeMessage.RecipientType.TO , demandeRV.getAbonne().getEmail());
@@ -54,22 +58,22 @@ public class EmailManager implements EmailService{
     }
 
     @Override
-    public void confirmRvEmail(RendezVous demandeRV, @RequestHeader("Authorization") String authHeader) throws MessagingException {
+    public void confirmRvEmail(RendezVous demandeRV, HttpSession session) throws MessagingException {
         //        SimpleMailMessage message = new SimpleMailMessage();
         MimeMessage mimeMessage = mailSender.createMimeMessage();
 //        message.setFrom("issam.mounir.pro@gmail.com");
         mimeMessage.setFrom("issam.mounir.pro@gmail.com");
         mimeMessage.setSubject("demande d'un rendez-vous");
         EmailContent emailContent = new EmailContent();
-        Object object = authService.getUserByEmail(authHeader);
-        if (object.getClass().equals(Abonne.class)) {
+        String object= (String) session.getAttribute("class");
+        if (object.equals(Abonne.class)) {
             String html =emailContent.confirmEmailContent(demandeRV.getAbonne().getNom());
             mimeMessage.setContent(html , "text/html ; charset=utf-8");
             mimeMessage.setRecipients(MimeMessage.RecipientType.TO , demandeRV.getClient().getEmail());
             mailSender.send(mimeMessage);
             System.out.println("ok");
         }
-        if (object.getClass().equals(Client.class)) {
+        if (object.equals(Client.class)) {
             String html =emailContent.confirmEmailContent(demandeRV.getClient().getNom());
             mimeMessage.setContent(html , "text/html ; charset=utf-8");
             mimeMessage.setRecipients(MimeMessage.RecipientType.TO , demandeRV.getAbonne().getEmail());
@@ -81,22 +85,22 @@ public class EmailManager implements EmailService{
     }
 
     @Override
-    public void cancelRvEmail(RendezVous demandeRV , @RequestHeader("Authorization") String authHeader) throws MessagingException {
+    public void cancelRvEmail(RendezVous demandeRV , HttpSession session) throws MessagingException {
         //        SimpleMailMessage message = new SimpleMailMessage();
         MimeMessage mimeMessage = mailSender.createMimeMessage();
 //        message.setFrom("issam.mounir.pro@gmail.com");
         mimeMessage.setFrom("issam.mounir.pro@gmail.com");
         mimeMessage.setSubject("demande d'un rendez-vous");
 //        EmailContent emailContent = new EmailContent();
-        Object object = authService.getUserByEmail(authHeader);
-        if (object.getClass().equals(Abonne.class)) {
+        String object= (String) session.getAttribute("class");
+        if (object.equals(Abonne.class)) {
             String html =emailContent.cancelEmailContent(demandeRV.getAbonne().getNom());
             mimeMessage.setContent(html , "text/html ; charset=utf-8");
             mimeMessage.setRecipients(MimeMessage.RecipientType.TO , demandeRV.getClient().getEmail());
             mailSender.send(mimeMessage);
             System.out.println("ok");
         }
-        if (object.getClass().equals(Client.class)) {
+        if (object.equals(Client.class)) {
             String html =emailContent.cancelEmailContent(demandeRV.getClient().getNom());
             mimeMessage.setContent(html , "text/html ; charset=utf-8");
             mimeMessage.setRecipients(MimeMessage.RecipientType.TO , demandeRV.getAbonne().getEmail());
